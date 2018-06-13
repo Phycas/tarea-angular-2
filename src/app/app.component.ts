@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IndicadorsService } from './indicadors.service';
 import { Http, Response} from '@angular/http';
 
 @Component({
@@ -7,35 +8,36 @@ import { Http, Response} from '@angular/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'Indicadores económicos en Chile';
+    title = 'Super Consulta';
     indicador = '';
     dateInspect = '';
-    valueUf = '';
+    valueUf = this.indicadorsService.buscarIndicador('uf', '11-11-2011');
 
-     constructor(private http: Http) {}
+     //constructor(private http: Http) {}
+     constructor(private indicadorsService: IndicadorsService, private http: Http) { }
+     prueba(): void{
+     this.title = this.indicadorsService.getAlgo();
+     }
+
 
      searchIndicator() {
-       this.http.get('https://mindicador.cl/api/' + this.indicador + '/' + this.dateInspect)
+       this.indicadorsService.buscarIndicador2(this.indicador, this.dateInspect)
        .subscribe(
            (res: Response) => {
              const valueIndicator = res.json();
              console.log(valueIndicator);
-             //this.valueUf =  valueIndicator.serie.valor; // res['serie'][0]['valor'];
              this.valueUf = valueIndicator['serie'][0]['valor'];
-             //for(let miS of valueIndicator['serie']) {
-             //  console.log(miS);
-              // console.log(miS['valor']);
-            // }
-           }, err => {
+            }, err => {
              console.log('UPS!');
              console.log(err);
            }, () => {
              console.log('¡Servicio Finalizado!');
-             // https://angular.io/guide/quickstart
-             // https://materializecss.com/
            }
        );
      }
 
+    searchIndicator2(){
+    this.valueUf = this.indicadorsService.buscarIndicador(this.indicador, this.dateInspect);
+    }
 
 }
