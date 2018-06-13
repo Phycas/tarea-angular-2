@@ -8,10 +8,15 @@
 <h2>Consulta de UF a una fecha deseada:</h2>
 <br>
 <div>
-  <label>Fecha para la UF:
-    <input [(ngModel)]="dateInspect" placeholder="name">
+  <label>Fecha:
+    <input [(ngModel)]="dateInspect" placeholder="dd-mm-aaaa">
   </label>
+  <br>
+  <label>Indicador:
+    <input [(ngModel)]="indicador" placeholder="uf, ivp, etc">
+  </label>
+  <br>
   <button (click)=searchIndicator()>Consultar</button>
-  <h2>Valor en pesos:{{valueUf}}</h2>
+  <h2>Valor: ${{valueUf}}</h2>
 </div>
 
